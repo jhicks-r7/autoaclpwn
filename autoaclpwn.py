@@ -184,6 +184,9 @@ if __name__ == "__main__":
     req_args.add_argument('-d', '--domain', type=str, metavar="DOMAIN", help="Target domain name", required=True)
     req_args.add_argument('-dc-ip', type=str, metavar="DC IP", help="Domain Controller IP address", required=True)
 
+    connection_group = parser.add_argument_group("Connection Options", "Options for connecting to LDAP")
+    connection_group.add_argument('--ldaps', action='store_true', default=False, help='Connect to DC over LDAPS')
+
     manual_group = parser.add_argument_group("Manual Options", "Options for manually adding members to groups or exploiting DACLs")
     manual_group.add_argument('--add-member', action='store_true', default=False, help="Add the member to the group")
     manual_group.add_argument('--modify-dacl', action='store_true', default=False, help="Modify the DACL to add addmember permission")
@@ -281,7 +284,10 @@ if __name__ == "__main__":
         print("Must have at least one of --modify-dacl or --add-member")
         exit()
     # Get our ldap connection
-    serv = ldap3.Server(args.dc_ip, tls=False, get_info=ldap3.ALL)
+    if args.ldaps:
+        serv = ldap3.Server(args.dc_ip, use_ssl=True, get_info=ldap3.ALL)
+    else:
+        serv = ldap3.Server(args.dc_ip, tls=False, get_info=ldap3.ALL)
     ldapconnection = connect_ldap(serv, args.user, args.password, args.domain)
 
     # If we are running from a BH json file, start executing the path
