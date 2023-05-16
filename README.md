@@ -7,6 +7,10 @@ git clone https://github.com/jhicks_r7/autoaclpwn
 pip3 install -r requirements.txt
 python3 autoaclpwn.py -h
 ```
+## Updates
+I added the ability to connect over LDAPs after someone had an issue with LDAP being secured. If you receive an error such as:
+`The server requires binds to turn on integrity checking if SSL\\TLS are not already active on the connection`
+Then add the --ldaps switch to try connecting over LDAPS
 
 ## Usage
 The following arguments are required for every mode autoaclpwn.py can run in:
